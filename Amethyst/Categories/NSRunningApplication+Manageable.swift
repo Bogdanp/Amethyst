@@ -44,7 +44,11 @@ extension NSRunningApplication: BundleIdentifiable {}
 
 extension NSRunningApplication {
     var isManageable: Manageable {
-        if let bundleIdentifier = bundleIdentifier, ignoredBundleIDs.contains(bundleIdentifier) {
+        guard let bundleIdentifier else {
+            return .unmanageable
+        }
+
+        if ignoredBundleIDs.contains(bundleIdentifier) {
             return .unmanageable
         }
 
